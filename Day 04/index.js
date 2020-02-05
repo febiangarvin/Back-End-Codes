@@ -1,4 +1,4 @@
-const express = require(('express'))
+const express = require(('express')) // //module module yang digunakan dalam pembuatan aplikasi server side
 const app = express()
 const BodyParser = require('body-parser')
 const PORT = 2020
@@ -6,12 +6,12 @@ const font = require('lodash')
 
 // ========================================================================================================== //
 
-app.use(BodyParser.urlencoded({ extended: false }))
+app.use(BodyParser.urlencoded({ extended: false })) // //menggunakan body-parser
 app.use(BodyParser.json())
 
 // ========================================================================================================== //
 
-const users = [
+const users = [ // //buat users dalam bentuk object, yang nantinya akan tampil di API dengan metode function GET
     {
         id: 1,
         username: 'ABC',
@@ -34,11 +34,11 @@ const users = [
 
 // ========================================================================================================== //
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => { // //metode GET untuk menampilkan request yang dibuat
     res.status(200).send('<h1>Welcome to this project example<h1>')
 })
 
-app.get('/users', (req, res) => {
+app.get('/users', (req, res) => { // //metode GET untuk menampilkan USERS
     console.log(req.query);
     const { username, password } = req.query
     if (username || password) {
@@ -55,26 +55,26 @@ app.get('/users', (req, res) => {
 
 // ========================================================================================================== //
 
-app.post('/users', (req, res) => {
+app.post('/users', (req, res) => { // //metode POST untuk menambah USER
     console.log(req.body);
-    const { username, email } = req.body
-    var newuser = users.filter((val) => val.username === username || val.email === email)
-    if (newuser.length) {
+    const { username, email } = req.body // //data yang perlu diisi di API
+    var newuser = users.filter((val) => val.username === username || val.email === email) // //melakukan filter pada user baru
+    if (newuser.length) { // //jika terdapat 1 data yang sama dengan user sebelumnya
         return res.status(500).send({ message: 'Username has already been registered' })
     }
-    users.push({ ...req.body, id: users.length + 1 })
+    users.push({ ...req.body, id: users.length + 1 }) // //melakukan penambahan id secara otomatis untuk user baru
     return res.status(200).send(users)
 })
 
 // ========================================================================================================== //
 
-app.put('/editusers/:id', (req, res) => {
+app.put('/editusers/:id', (req, res) => { // //metode PUT untuk merubah password sebuah user berdasarkan ID nya
     console.log(req.params.id);
     if (users[req.params.id - 1]) {
         users[req.params.id - 1] = { ...users[req.params.id - 1], password: req.body.password }
         return res.status(200).send(users[req.params.id - 1])
     }
-    else {
+    else { // //jika id user yang dimasukan belum ada
         return res.status(404).send({ message: 'User Not Found' })
     }
 })
@@ -130,7 +130,7 @@ var arrprod = [
 
 app.get('/diaper', (req, res) => { // //membuat function search dengan kondisi yang dimasukan (query)
     console.log(req.query);
-    var { nama, harga, hargaminimal, hargamaximal } = req.query // //penulisan destructuring
+    var { nama, harga, hargaminimal, hargamaximal } = req.query // //penulisan destructuring untuk query yang akan diisi oleh user
     if (nama) { // //kondisi jika query yang diinput nama
         var newdatanama = arrprod.filter((val) => val.nama.includes(nama.toLowerCase()))
         return res.status(200).send(newdatanama)

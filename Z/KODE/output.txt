@@ -1,0 +1,3 @@
+Currently we are learning stream
+
+This is a text from kode.txt
